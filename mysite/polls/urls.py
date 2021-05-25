@@ -19,9 +19,11 @@ urlpatterns = [
     # path('storeTestDegree/<str:userId>/<int:testType>/',
     #      views.storeTestDegree, name='storeTestDegree'),
 
-    path('getUserFilterParams/<str:userId>/', views.getUserFilterParams,
-         name='getUserFilterParams'),
+    # path('getUserFilterParams/<str:userId>/', views.getUserFilterParams,
+    #      name='getUserFilterParams'),
 
     url('storeTestDegree', views.storeTestDegree, name='storeTestDegree'),
+
+    url('getUserFilterParams', views.getUserFilterParams, name='getUserFilterParams'),
 
 ]

@@ -4,6 +4,7 @@ from django.http import HttpResponse, Http404, JsonResponse
 from .models import Question, Test, Filters
 from django.template import loader
 from django.shortcuts import render
+import json
 
 
 def index(request):
@@ -61,10 +62,37 @@ def storeTestDegree(request):
     userId = request.GET['userId']
     testType = request.GET['testType']
     degrees = request.GET['degrees']
+    print(type(degrees))
+    degrees = list(degrees.split(","))
+    print(type(degrees))
+    print(degrees)
 
-    print(degrees, testType, userId)
-    return HttpResponse("{} {} {}".format(degrees, testType, userId))
 
+    # print(degrees, testType, userId)
+    # return HttpResponse("{} {} {}".format(degrees, testType, userId))
+
+    try:
+        temp = Test.objects.values().filter(userId=userId, testType=testType)
+        if temp:
+            temp = temp[0]
+            print(temp)
+            print(temp["userId"])
+            temp.update(userId=userId, testType=testType,
+                        degreeA=degrees[0], degreeB=degrees[1],
+                        degreeC=degrees[2])
+            print("Update OK")
+        else:
+            t = Test(userId=userId, testType=testType,
+                     degreeA=degrees[0], degreeB=degrees[1],
+                     degreeC=degrees[2])
+            print("Test created")
+            t.save()
+            print("Save OK")
+
+    except:
+        return HttpResponse("ERROR!")
+
+    return HttpResponse("YES")
     # if request.method == 'POST':
     #     print("the POST method")
     #     concat = request.POST
@@ -79,12 +107,10 @@ def storeTestDegree(request):
     # return HttpResponse("YES!")
 
 def storeTestFilter(t: Test):
-    id = t.userid
+    id = t.userId
     type = t.testType
 
-
-
-    f = Filters(userid=id, filterType=type)
+    f = Filters(userId=id, filterType=type)
 
 def getDefaultParams(request):
 
@@ -95,10 +121,39 @@ def getDefaultParams(request):
     data = {"arr": user_filter}
     return JsonResponse(data)
 
-def getUserFilterParams(request, userId):
+def getUserFilterParams(request):
     # user_filter = get_object_or_404(Filters, pk=userId)
-    user_filter = [[2,2],[3,3]]
-    data = {"userFilterParams": user_filter}
-    return JsonResponse(data)
+
+    userId = request.GET["userId"]
+    print(userId)
+
+    try:
+        temp = Test.objects.values().filter(userId=userId)
+        print(temp)
+
+        if temp:
+            temp = list(temp)
+            print(temp)
+            data = {
+                "userFilterParams": temp,
+                "message": "OK"
+            }
+
+        else:
+            data = {
+                "userFilterParams": [],
+                "message": "Not Match"
+            }
+
+        print(data)
+        return JsonResponse(data)
+
+    except:
+        data = {
+            "userFilterParams": [],
+            "message": "ERROR"
+        }
+        return JsonResponse(data)
+
 
 

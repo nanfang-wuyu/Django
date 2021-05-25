@@ -31,7 +31,7 @@ class User(models.Model):
 
 
 class Test(models.Model):
-    userid = models.IntegerField()
+    userId = models.CharField(max_length=200)
     testType = models.IntegerField()
     degreeA = models.FloatField()
     degreeB = models.FloatField()
@@ -39,7 +39,7 @@ class Test(models.Model):
 
 
 class Filters(models.Model):
-    userid = models.IntegerField(default=-1)  # -1 means default values
+    userId = models.CharField(max_length=200, default="-1")  # -1 means default values
     filterType = models.IntegerField(default=0)  # 0, 1, 2, 3
     r1 = models.FloatField()
     r2 = models.FloatField()

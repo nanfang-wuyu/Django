@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsPostCsrfMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -148,3 +149,5 @@ from corsheaders.defaults import default_headers
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'my-custom-header',
 ]
+
+CORS_ALLOW_CREDENTIALS = True
