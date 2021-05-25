@@ -16,10 +16,12 @@ urlpatterns = [
     path('getTestGraphics/<int:graphicType>/', views.getTestGraphics,
          name='getTestGraphics'),
 
-    path('storeTestDegree/<degrees>/<int:testType>/<str:userId>',
-         views.storeTestDegree, name='storeTestDegree'),
+    # path('storeTestDegree/<str:userId>/<int:testType>/',
+    #      views.storeTestDegree, name='storeTestDegree'),
 
-    path('getUserFilterParams/<str:userId>', views.getUserFilterParams,
+    path('getUserFilterParams/<str:userId>/', views.getUserFilterParams,
          name='getUserFilterParams'),
+
+    url('storeTestDegree', views.storeTestDegree, name='storeTestDegree'),
 
 ]

@@ -46,17 +46,37 @@ userId: 用户ID
 """
 
 
-def storeTestDegree(request, degrees, testType, userId):
-    try:
-        t = Test(userid=userId, testType=testType,
-                 degreeA=degrees[0], degreeB=degrees[1],
-                 degreeC=degrees[2])
-        t.save()
+# def storeTestDegree(request, degrees, testType, userId):
+    # try:
+    #     t = Test(userid=userId, testType=testType,
+    #              degreeA=degrees[0], degreeB=degrees[1],
+    #              degreeC=degrees[2])
+    #     t.save()
+    #
+    # except:
+    #     return HttpResponse("ERROR!")
 
-    except:
-        return HttpResponse("ERROR!")
 
-    return HttpResponse("YES!")
+def storeTestDegree(request):
+    userId = request.GET['userId']
+    testType = request.GET['testType']
+    degrees = request.GET['degrees']
+
+    print(degrees, testType, userId)
+    return HttpResponse("{} {} {}".format(degrees, testType, userId))
+
+    # if request.method == 'POST':
+    #     print("the POST method")
+    #     concat = request.POST
+    #     print(concat)
+    #     # print(concat['username'])
+    #
+    #     postBody = request.body
+    #     print(type(postBody))
+    #     print(postBody)
+    # print(degrees, testType, userId)
+    #
+    # return HttpResponse("YES!")
 
 def storeTestFilter(t: Test):
     id = t.userid
@@ -65,7 +85,6 @@ def storeTestFilter(t: Test):
 
 
     f = Filters(userid=id, filterType=type)
-
 
 def getDefaultParams(request):
 
