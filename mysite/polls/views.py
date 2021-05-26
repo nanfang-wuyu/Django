@@ -74,12 +74,12 @@ def storeTestDegree(request):
     try:
         temp = Test.objects.values().filter(userId=userId, testType=testType)
         if temp:
-            temp = temp[0]
-            print(temp)
-            print(temp["userId"])
             temp.update(userId=userId, testType=testType,
                         degreeA=degrees[0], degreeB=degrees[1],
                         degreeC=degrees[2])
+
+            temp = temp[0]
+            print(temp)
             print("Update OK")
         else:
             t = Test(userId=userId, testType=testType,
